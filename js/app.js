@@ -59,11 +59,12 @@ moves =0;
  
 for (var i = 0; i <= cards.length ; i++) {
    cards[i].addEventListener("click", function(){
-    if (!(this.classList.contains("open"))) {
+    if (!(this.classList.contains("open" , "show" , "error"))) {
     this.classList.toggle("open");
       this.classList.toggle("show");
       list.innerHTML = clicks;
       var name = this.className;
+      var current = document.getElementsByClassName('card');
     clicks +=1;
     firstC +=1;
     console.log(clicks , name );
@@ -74,6 +75,7 @@ for (var i = 0; i <= cards.length ; i++) {
         hour = 0;
         startTimer();
     };
+     
     if (clicks === 1) {
       name1 = this.className;
       html = this;
@@ -102,13 +104,19 @@ for (var i = 0; i <= cards.length ; i++) {
           console.log(moves ,second, minute ,starx );
           };
       }//unmatched
-      else{
+      if(name1 !== name2){
       html2.classList.add("error");
       html.classList.add("error");
+
       setTimeout(function(){
           html.classList.remove("show", "open", "error");
           html2.classList.remove("show", "open", "error");},600);
     }
+    else{
+    if (html.classList.contains('error') || html2.classList.contains('error') ) {
+      html.classList.remove("show", "open", "error");
+      html2.classList.remove("show", "open", "error");
+    }}
     } 
     } 
   });
@@ -140,7 +148,7 @@ function moveCounter(){
     moves +=1; 
      document.getElementById('moves').innerHTML= moves; 
      // setting rates based on moves
-    if (moves > 8 && moves < 12){
+    if (moves > 12 && moves < 16){
       starx = 2;
       let star = document.getElementsByClassName("star");
         for( i= 0; i < 3; i++){
@@ -149,7 +157,7 @@ function moveCounter(){
             }
         }
     }
-    else if (moves > 13){
+    else if (moves > 17){
       starx = 1;
         for( i= 0; i < 3; i++){
           let star = document.getElementsByClassName("star");
