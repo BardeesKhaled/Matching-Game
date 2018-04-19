@@ -53,35 +53,43 @@ window.onload = startGame();
 var match;
 function clickC(){
 var clicks = 0;
+var firstC = 0;
 moves =0;
  match =0;
+ 
 for (var i = 0; i <= cards.length ; i++) {
-	 cards[i].addEventListener("click", function(event){
-		this.classList.toggle("open");
-   		this.classList.toggle("show");
-   		list.innerHTML = clicks;
-   		var name = this.className;
-		clicks +=1;
-
-		console.log(clicks , name );
-		//first clicked
-		if (clicks === 1) {
-			name1 = this.className;
-			html = this;
-      event.preventDefault();
-		};
-		//second clicked
-		if(clicks === 2){
-			name2 = this.className;
-			html2= this;
-			clicks = 0;
-			//compare matched 
-			if (name1 === name2) {
-				html2.classList.toggle("match");
-				html.classList.toggle("match");
-				html.style.pointerEvents = 'none' ;
-				html2.style.pointerEvents = 'none' ;
-        moveCounter();
+   cards[i].addEventListener("click", function(){
+    if (!(this.classList.contains("open"))) {
+    this.classList.toggle("open");
+      this.classList.toggle("show");
+      list.innerHTML = clicks;
+      var name = this.className;
+    clicks +=1;
+    firstC +=1;
+    console.log(clicks , name );
+    //first clicked
+    if (firstC ===1 ) {
+        second = 0;
+        minute = 0; 
+        hour = 0;
+        startTimer();
+    };
+    if (clicks === 1) {
+      name1 = this.className;
+      html = this;
+    };
+    //second clicked
+    if(clicks === 2){
+      name2 = this.className;
+      html2= this;
+      clicks = 0;
+      moveCounter();
+      //compare matched 
+      if (name1 === name2) {
+        html2.classList.toggle("match");
+        html.classList.toggle("match");
+        html.style.pointerEvents = 'none' ;
+        html2.style.pointerEvents = 'none' ;
          match +=1;
          //winng
          if (match === 8) {
@@ -93,27 +101,26 @@ for (var i = 0; i <= cards.length ; i++) {
           
           console.log(moves ,second, minute ,starx );
           };
-			}//unmatched
-			else{
-			html2.classList.add("error");
-			html.classList.add("error");
-      moveCounter();
-			setTimeout(function(){
-        	html.classList.remove("show", "open", "error");
-        	html2.classList.remove("show", "open", "error");},600);
-		}
-		}		
-     
-	});
+      }//unmatched
+      else{
+      html2.classList.add("error");
+      html.classList.add("error");
+      setTimeout(function(){
+          html.classList.remove("show", "open", "error");
+          html2.classList.remove("show", "open", "error");},600);
+    }
+    } 
+    } 
+  });
 };
 }
 
 var second = 0, minute = 0; hour = 0;
 var interval;
-	//Timer function
-	function startTimer(){
+  //Timer function
+  function startTimer(){
     interval = setInterval(function(){
-    	var timer = document.querySelector(".timer");
+      var timer = document.querySelector(".timer");
         timer.innerHTML = minute+"mins "+second+"secs";
         second++;
         if(second == 60){
@@ -124,41 +131,40 @@ var interval;
             hour++;
             minute = 0;
         }
-    },1000);
+    },350);
 }
 //move function
 var starx=3;
-function moveCounter(){  
+function moveCounter(){ 
+    //m+=1; 
     moves +=1; 
-   	 document.getElementById('moves').innerHTML= moves; 
-   	 // setting rates based on moves
+     document.getElementById('moves').innerHTML= moves; 
+     // setting rates based on moves
     if (moves > 8 && moves < 12){
       starx = 2;
-    	let star = document.getElementsByClassName("star");
+      let star = document.getElementsByClassName("star");
         for( i= 0; i < 3; i++){
             if(i > 1){
-                star[i].style.visibility = "collapse";
-                
+                star[i].style.visibility = "collapse";    
             }
         }
     }
     else if (moves > 13){
       starx = 1;
         for( i= 0; i < 3; i++){
-        	let star = document.getElementsByClassName("star");
+          let star = document.getElementsByClassName("star");
             if(i > 0){
                 star[i].style.visibility = "collapse";
-                
             }
         }
     }
     //set timer
-   if(moves == 1){
+  /* if(moves == 1){
         second = 0;
         minute = 0; 
         hour = 0;
         startTimer();
-    }
+    }*/
 }
 function replay(){
     window.location.reload();

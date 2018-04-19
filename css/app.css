@@ -135,13 +135,7 @@ h1 {
 }
 
 
-/* For Tablets and larger screens
-****************/
-
 @media (min-width: 768px) {
-    .container {
-        font-size: 22px;
-    }
 
     .deck {
         width: 660px;
@@ -152,8 +146,5 @@ h1 {
         height: 125px;
         width: 125px;
     }
-
-    .popup {
-        width: 60%;
-    }
 }
+
